@@ -4,6 +4,11 @@
  */
 package com.mycompany.mavenproject2;
 
+import java.awt.event.ItemEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +22,19 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+         jCheckBox1.setLabel("Show Password");
+
+        
+        jCheckBox1.addItemListener(pa -> {
+            
+            if (pa.getStateChange() == ItemEvent.SELECTED) {
+                
+                txt2.setEchoChar((char) 0);
+            } else {
+                
+                txt2.setEchoChar('*');
+            }
+        });
     }
 
     /**
@@ -33,10 +51,9 @@ public class login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         txt2 = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,7 +68,7 @@ public class login extends javax.swing.JFrame {
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Password:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, -1));
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Username:");
@@ -79,33 +96,24 @@ public class login extends javax.swing.JFrame {
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 90, 30));
 
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Forgot password?");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, -1, -1));
-
-        jButton3.setText("Click here");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 380, 90, 20));
-
         txt2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt2ActionPerformed(evt);
             }
         });
-        getContentPane().add(txt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 170, 30));
+        getContentPane().add(txt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 170, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setText("Student Login");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, -1));
 
+        jCheckBox1.setText("Show Password");
+        getContentPane().add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, -1, -1));
+
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\CL3-PC39\\Downloads\\Black and Red Minimalist Modern Registration Gym Website Prototype (1).jpg")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\CL3-PC09\\Downloads\\a2 (1).jpg")); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 470));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -120,22 +128,38 @@ public class login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     
-    int x = Integer.parseInt(txt1.getText());
-    int y = Integer.parseInt(txt2.getText());
-    
-    if (x == 12345 && y == 12345)
-            {
-            JOptionPane.showMessageDialog(null, "Log In Successfully", "Student Portal", JOptionPane.INFORMATION_MESSAGE);
-            }
-    
-    new info().setVisible(true);
-    this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    String inputuser = txt1.getText(); 
+    String inputpass = txt2.getText(); 
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/studport", "root", "");
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new forgot().setVisible(true);
-    
-this.dispose();    }//GEN-LAST:event_jButton3ActionPerformed
+        String sql = "SELECT * FROM clarkiansinfo WHERE phonenum = ? AND birthday = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, inputuser);
+        stmt.setString(2, inputpass);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            info login = new info();
+            login.setVisible(true);
+            this.dispose();
+            JOptionPane.showMessageDialog(null, "Login successful, Welcome Clarkian!");
+           
+          
+          
+        } else {
+            JOptionPane.showMessageDialog(null, "invalid credentials");
+        }
+
+        conn.close();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
   
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        new register().setVisible(true);
@@ -180,11 +204,10 @@ this.dispose();    }//GEN-LAST:event_jButton3ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txt1;
     private javax.swing.JPasswordField txt2;

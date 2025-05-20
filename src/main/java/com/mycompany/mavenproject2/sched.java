@@ -28,8 +28,8 @@ public class sched extends javax.swing.JFrame {
 
         jLabel5 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -47,15 +47,15 @@ public class sched extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 70, 30));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 360, 80, 30));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\CL3-PC39\\Downloads\\a (1).png")); // NOI18N
-        jLabel2.setText("jLabel2");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 400, 260));
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\CL3-PC09\\Downloads\\a34.png")); // NOI18N
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 210, 170));
 
-        jLabel20.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel20.setIcon(new javax.swing.ImageIcon("C:\\Users\\CL3-PC39\\Downloads\\Black and Red Minimalist Modern Registration Gym Website Prototype (2) (1).jpg")); // NOI18N
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 470));
+        jLabel21.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel21.setIcon(new javax.swing.ImageIcon("C:\\Users\\CL3-PC09\\Downloads\\a1 (1).jpg")); // NOI18N
+        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -102,8 +102,8 @@ public class sched extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
